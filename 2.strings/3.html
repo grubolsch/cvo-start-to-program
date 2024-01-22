@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 3 - E-mail validatie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 3 - E-mail validatie</h1>
+    <p>Vraag de gebruiker om een email address en geef terug om dit een geldige email is. (met een @-symbool en een punt na de @)</p>
+    <form id="my-form">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="text" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Versturen</button>
+        </div>
+        <div class="mb-3">
+            <h2 id="result"></h2>
+        </div>
+    </form>
+</div>
+
+<script src="3.js"></script>
+<script>
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let email = document.querySelector('#email').value;
+
+        document.querySelector('#result').innerHTML = validateEmail(email);
+    });
+</script>
+</body>
+</html>

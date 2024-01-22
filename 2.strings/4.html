@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 4 - Verander stuk tekst</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 4 - Verander stuk tekst</h1>
+    <p>Vraag de gebruiker om een woord in te geven, en een start en begin positie. Toon het gedeelte tussen deze 2 posities in UPPERCASE, en de rest in lowercase.</p>
+    <p>Voorbeeld: "Stoelendans", begin 6, einde 7 geeft "stoelENdans".</p>
+    <form id="my-form">
+        <div class="mb-3">
+            <label for="word" class="form-label">Woord 1:</label>
+            <input type="text" class="form-control" id="word" name="word" required>
+        </div>
+        <div class="mb-3">
+            <label for="start" class="form-label">Start positie:</label>
+            <input type="number" class="form-control" id="start" name="start" required>
+        </div>
+        <div class="mb-3">
+            <label for="end" class="form-label">Einde positie:</label>
+            <input type="number" class="form-control" id="end" name="end" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Versturen</button>
+        </div>
+        <div class="mb-3">
+            <h2 id="result"></h2>
+        </div>
+    </form>
+</div>
+
+<script src="4.js"></script>
+<script>
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let word = document.querySelector('#word').value;
+        let start = document.querySelector('#start').value;
+        let end = document.querySelector('#end').value;
+
+        document.querySelector('#result').innerHTML = replace(word, start, end);
+    });
+</script>
+</body>
+</html>

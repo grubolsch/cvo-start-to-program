@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 1 - begroeting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 1 - begroeting</h1>
+    <p>Vraag het geslacht van de gebruiker, en zijn/haar naam. Spreek de gebruiker aan met "Mevrouw/meneer" en zijn/haar naam.</p>
+    <form id="my-form">
+        <div class="mb-3">
+            <label for="gender" class="form-label">Geslacht:</label>
+            <select class="form-select" id="gender" name="gender" required>
+                <option value="man">Man</option>
+                <option value="vrouw">Vrouw</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Naam:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Versturen</button>
+        </div>
+        <div class="mb-3">
+            <h2 id="result"></h2>
+        </div>
+    </form>
+</div>
+
+<script src="1.js"></script>
+<script>
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let gender = document.querySelector('#gender').value;
+        let name = document.querySelector('#name').value;
+
+        document.querySelector('#result').innerHTML = greeting(gender, name);
+    });
+</script>
+</body>
+</html>

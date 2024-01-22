@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 1 - Kleuren kiezen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 1 - Kleuren kiezen</h1>
+    <p>Vraag de gebruiker om de RGB waarde te geven voor een kleur, en verander de zwarte balk naar deze kleur.
+        Hiervoor zal je de in <a href="https://www.w3schools.com/css/css_colors_rgb.asp">CSS stijl</a> de RGB waarde
+        moeten teruggeven.</p>
+
+    <h2 id="result"></h2>
+
+    <div class="mb-3">
+        <label for="red" class="form-label">Red</label>
+        <input type="range" id="red" name="red" value="0" min="0" max="255">
+
+        <label for="green" class="form-label">Green</label>
+        <input type="range" id="green" name="green" value="0" min="0" max="255">
+
+        <label for="green" class="form-label">Blue</label>
+        <input type="range" id="blue" name="blue" value="0" min="0" max="255">
+    </div>
+</div>
+
+<style>
+    #result {
+        height: 40px;
+        width: 100%;
+        background-color: black;
+    }
+</style>
+<script src="1.js"></script>
+<script>
+    function changeColorOnInput() {
+        document.querySelector('#result').style.backgroundColor = changeColor(
+            document.querySelector('#red').value,
+            document.querySelector('#green').value,
+            document.querySelector('#blue').value,
+        )
+    }
+
+    document.querySelector('#red').addEventListener('input', changeColorOnInput);
+    document.querySelector('#green').addEventListener('input', changeColorOnInput);
+    document.querySelector('#blue').addEventListener('input', changeColorOnInput);
+</script>
+</body>
+</html>

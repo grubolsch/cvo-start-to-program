@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 4 - begroeting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 4 - BMI berekening</h1>
+
+
+    Geslacht Smal gebouwd Normaal gebouwd Breed gebouwd
+    Man > 10,4 10,4 – 9,6 < 9,6
+    Vrouw > 10,9 10,9 – 9,9 < 9,9
+
+    <p>Vraag het geslacht van de gebruiker, en zijn/haar gewicht en lengte. Bereken dan het BMI.</p>
+    <p>
+        Voor mannen is deze: Lengte (in cm) – 100 – (lengte – 150)/4.
+    </p>
+    <p>
+        Voor vrouwen is deze: Lengte (in cm) – 100 ) (Lengte – 150)/2
+    </p>
+
+    <p>Geef dan weer in welke categorie de gebruiker valt:</p>
+
+    <table>
+        <tr>
+            <th>Body Mass Index (BMI)</th>
+            <th>Classificatie</th>
+        </tr>
+        <tr>
+            <td>&lt; 18,5</td>
+            <td>Ondergewicht</td>
+        </tr>
+        <tr>
+            <td>18,5 – 24,9</td>
+            <td>Normaal gewicht</td>
+        </tr>
+        <tr>
+            <td>25 – 29,9</td>
+            <td>Overgewicht</td>
+        </tr>
+        <tr>
+            <td>30 - 34,9</td>
+            <td>Matige obesitas (graad 1)</td>
+        </tr>
+        <tr>
+            <td>35 – 39,9</td>
+            <td>Ernstige obesitas (graad 2)</td>
+        </tr>
+        <tr>
+            <td>&gt; 40</td>
+            <td>Morbide obesitas (graad 3)</td>
+        </tr>
+    </table>
+
+    <form id="my-form">
+        <div class="mb-3">
+            <label for="gender" class="form-label">Geslacht:</label>
+            <select class="form-select" id="gender" name="gender" required>
+                <option value="man">Man</option>
+                <option value="vrouw">Vrouw</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="length" class="form-label">Lengte (CM):</label>
+            <input type="number" class="form-control" id="length" name="length" required>
+        </div>
+        <div class="mb-3">
+            <label for="weight" class="form-label">Gewicht (KG):</label>
+            <input type="number" class="form-control" id="weight" name="weight" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Bereken</button>
+        </div>
+        <div class="mb-3">
+            <h2 id="result"></h2>
+        </div>
+    </form>
+</div>
+
+<script src="4.js"></script>
+<script>
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let gender = document.querySelector('#gender').value;
+        let weight = document.querySelector('#weight').value;
+        let length = document.querySelector('#length').value;
+
+        document.querySelector('#result').innerHTML = showBmiCategory(gender, weight, length);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 0 - Minderjarig of meerderjarig?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 0 - Minderjarig of meerderjarig?</h1>
+    <p>Deze oefening staat niet op punten, maar gaan we samen in de klas maken zodat je kan zien hoe de oefeningen zullen werken.</p>
+    <p>Het is normaal dat het in het begin moeilijk is, laat je hierdoor niet ontmoedigen: <a href="http://www.google.be/">google</a> is je vriend.</p>
+    <p>Vraag de leeftijd en de naam aan de gebruiker. Is de gebruiker 18 jaar of ouder zeg dan "Welkom!." Anders zeg je "Verboden toegang voor minderjarigen."</p>
+
+    <form id="my-form">
+        <div class="mb-3">
+            <label for="age" class="form-label">Leeftijd gebruiker:</label>
+            <input type="text" class="form-control" id="age" name="age" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Versturen</button>
+        </div>
+        <div class="mb-3">
+            <h2 id="result"></h2>
+        </div>
+    </form>
+</div>
+
+<script src="0.js"></script>
+<script>
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let age = document.querySelector('#age').value;
+
+        document.querySelector('#result').innerHTML = greeting(age);
+    });
+</script>
+</body>
+</html>
