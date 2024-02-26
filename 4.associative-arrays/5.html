@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 4.5</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 4.5</h1>
+    <p>Zorg dat je nieuwe fruitsoorten kan toevoegen als je het formulier invult, <strong>volgense de huidige structuur</strong> in <em>fruit-array.js</em>.</p>
+    <p><em>Dit fruit gaat verdwijnen als je de pagina refreshed, dit is normaal, dat is geen probleem.</em></p>
+    <p>Tip: Gebruik <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push" target="_blank">Array.push()</a>. Kijk goed naar de structuur van de huidige array.</p>
+
+    <form id="my-form">
+        <div class="row mb-3">
+            <label for="name" class="col-sm-2 col-form-label">Naam:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="color" class="col-sm-2 col-form-label">Kleur:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="color" name="color" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="taste" class="col-sm-2 col-form-label">Smaak:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="taste" name="taste" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="calories" class="col-sm-2 col-form-label">Maximum calorieën:</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" id="calories" name="calories" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="carbs" class="col-sm-2 col-form-label">Minimum koolhydraten (carbs):</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" id="carbs" name="carbs" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="fiber" class="col-sm-2 col-form-label">Minimum vezels (fiber):</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" id="fiber" name="fiber" required>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary">Zoeken</button>
+        </div>
+    </form>
+    <div class="mb-3" id="result">
+    </div>
+</div>
+
+<script src="fruit-array.js"></script>
+<script src="5.js"></script>
+<script>
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        document.querySelector('#result').innerHTML = arrayToHtmlTable(addFruit(
+            fruits,
+            document.querySelector('#name').value,
+            document.querySelector('#color').value,
+            document.querySelector('#taste').value,
+            document.querySelector('#calories').value,
+            document.querySelector('#carbs').value,
+            document.querySelector('#fiber').value,
+        ));
+    });
+</script>
+</body>
+</html>

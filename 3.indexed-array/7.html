@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 3.7</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Oefening 3.7</h1>
+    <p>Zorg dat je via het formulier fruitsoorten kan toevoegen aan de array "list".</p>
+    <p>Als de gebruiker op de knop "Toon geldig fruit" klikt, ziet hij al het geldige fruit in de "list", gescheiden met een comma.</p>
+    <p>Geldig fruit is langer dan de ingegeven minimum lengte, en korter dan de maximum lengte ingegeven door de gebruiker.</p>
+    <p>Pas op: de gebruiker kan een of beide velden leeg laten!</p>
+
+    <p>Tip: Gebruik <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">Array.filter()</a> en <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length" target="_blank">String.length()</a></p>
+
+    <h2>Fruit toevoegen</h2>
+    <form id="my-form">
+        <div class="row mb-3">
+            <label for="fruit" class="col-sm-2 col-form-label">Fruit:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="fruit" name="fruit" required>
+            </div>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary">Toevoegen</button>
+            </div>
+        </div>
+    </form>
+    <form id="show-array" class="btn btn-secondary">
+        <div class="mb-3">
+            <label for="minLength" class="form-label">Minimum lengte:</label>
+            <input type="number" class="form-control" id="minLength" name="minLength">
+        </div>
+        <div class="mb-3">
+            <label for="maxLength" class="form-label">Maximum lengte:</label>
+            <input type="number" class="form-control" id="maxLength" name="maxLength">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Toon geldig fruit</button>
+        </div>
+    </form>
+    <div class="mb-3">
+        <h2 id="result"></h2>
+    </div>
+</div>
+
+<script src="7.js"></script>
+<script>
+    let list = [];
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        addFruit(
+            list,
+            document.querySelector('#fruit').value
+        );
+        document.querySelector('#fruit').value = '';
+    });
+    document.querySelector('#show-array').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        document.querySelector('#result').innerHTML = showFruits(
+            list,
+            document.querySelector('#minLength').value,
+            document.querySelector('#maxLength').value
+        );
+    });
+</script>
+</body>
+</html>
