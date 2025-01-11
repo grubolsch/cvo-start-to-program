@@ -6,19 +6,40 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oefening 4.2</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Oefening 4.2</h1>
-    <p>Maak een nieuwe indexed array aan met alle smaken, gebasseerd op de huidige <em>fruits</em> array. Toon alle smaken gescheiden met een comma als de gebruiker op de knop klikt.</p>
-    <p>Tip: Gebruik <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank">Array.map()</a> en <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join" target="_blank">Array.join()</a></p>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>Oefening 4.2</h1>
+            <p>Maak een nieuwe indexed array aan met alle smaken, gebaseerd op de huidige <em>fruits</em> array. Toon
+                alle smaken gescheiden met een comma als de gebruiker op de knop klikt. Toon elke smaak maar een keer!
+            </p>
+            <p>Tip: Gebruik <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
+                    target="_blank">Array.map()</a> en <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join"
+                    target="_blank">Array.join()</a></p>
 
-    <div class="mb-3">
-        <button id="show-array" class="btn btn-secondary">Toon alle smaken</button>
-    </div>
-    <div class="mb-3" id="result">
+            <h2>Unieke waardes</h2>
+            <p>Om te zorgen dat je geen dubbele waardes hebt in je array? Gebruik dan <em>tastes = [...new
+                Set(tastes)]</em>, voordat je het resultaat toont. Deze code gaat ervan uit dat de smaken in de variable
+                <em>tastes</em> zitten.</p>
+
+            <div class="mb-3">
+                <button id="show-array" class="btn btn-secondary">Toon alle smaken</button>
+            </div>
+            <div class="mb-3" id="result">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
+        </div>
     </div>
 </div>
 
@@ -30,6 +51,32 @@
 
         document.querySelector('#result').innerHTML = showTastes(fruits);
     });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('showTastes', function () {
+        it('Geef alle smaken terug', function () {
+            const result = showTastes([{
+                    "name": "Mango",
+                    "taste": "Sweet",
+                },
+                {
+                    "name": "Orange",
+                    "taste": "Citrusy",
+                }]);
+            assert.deepEqual(result, 'Sweet,Citrusy');
+        });
+
+        it('Geef alle smaken terug, elke smaak maar 1 keer', function () {
+            const result = showTastes(fruits);
+            assert.deepEqual(result, 'Sweet,Citrusy,Tart,Tangy');
+        });
+    });
+
+    mocha.run();
+
 </script>
 </body>
 </html>

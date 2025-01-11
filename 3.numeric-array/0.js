@@ -1,13 +1,13 @@
 function addFruit(list, element) {
     console.log(list, element);
-}
 
-function removeFruit(list, index) {
-    console.log(list, index);
+    list.push(element)
 }
 
 function showFruits(list) {
     console.log(list);
+
+    return list.join(',');
 
     return '';
 }

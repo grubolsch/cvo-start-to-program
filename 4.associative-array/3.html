@@ -6,26 +6,39 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oefening 4.3</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Oefening 4.3</h1>
-    <p>Toon alle fruitsoorten die dezelfde smaak hebben als de gebruiker opgeeft. Zorg ervoor dat de search hoofdletter ongevoelig is.</p>
-    <p>Tip: Gebruik <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">Array.filter()</a></p>
-    <form id="my-form">
-        <div class="row mb-3">
-            <label for="tastes" class="col-sm-2 col-form-label">Smaken:</label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="tastes" name="tastes" required>
-            </div>
-            <div class="col-sm-3">
-                <button type="submit" class="btn btn-primary">Zoeken</button>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>Oefening 4.3</h1>
+            <p>Toon alle fruitsoorten die dezelfde smaak hebben als de gebruiker opgeeft. Zorg ervoor dat het zoeken
+                hoofdletter ongevoelig is.</p>
+            <p>Tip: Gebruik <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter"
+                    target="_blank">Array.filter()</a></p>
+            <form id="my-form">
+                <div class="row mb-3">
+                    <label for="tastes" class="col-sm-2 col-form-label">Smaken:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="tastes" name="tastes" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-primary">Zoeken</button>
+                    </div>
+                </div>
+            </form>
+            <div class="mb-3" id="result">
             </div>
         </div>
-    </form>
-    <div class="mb-3" id="result">
+        <div class="col-sm-4">
+            <div id="mocha"></div>
+        </div>
     </div>
 </div>
 
@@ -40,6 +53,85 @@
             document.querySelector('#tastes').value
         ));
     });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('showFruits', function () {
+        it('moet fruit met dezelfde smaak teruggeven, hoofdlettergevoelig', function () {
+            const fruits = [
+                { name: 'Apple', taste: 'Sweet' },
+                { name: 'Banana', taste: 'Sweet' },
+                { name: 'Orange', taste: 'Citrus' },
+                { name: 'Lemon', taste: 'Citrus' },
+                { name: 'Pineapple', taste: 'Tart' }
+            ];
+
+            // Gegeven smaak is "sweet" (hoofdletterongevoelig)
+            const result = showFruits(fruits, 'sweet');
+
+            // Het resultaat moet de vruchten met de smaak "Sweet" zijn
+            assert.deepEqual(result, [
+                { name: 'Apple', taste: 'Sweet' },
+                { name: 'Banana', taste: 'Sweet' }
+            ]);
+        });
+
+        it('moet fruit met dezelfde smaak teruggeven, hoofdlettergevoelig (hoofdletterinvoer)', function () {
+            const fruits = [
+                { name: 'Apple', taste: 'Sweet' },
+                { name: 'Banana', taste: 'Sweet' },
+                { name: 'Orange', taste: 'Citrus' },
+                { name: 'Lemon', taste: 'Citrus' },
+                { name: 'Pineapple', taste: 'Tart' }
+            ];
+
+            // Gegeven smaak is "SWEET" (hoofdletterongevoelig)
+            const result = showFruits(fruits, 'SWEET');
+
+            // Het resultaat moet de vruchten met de smaak "Sweet" zijn
+            assert.deepEqual(result, [
+                { name: 'Apple', taste: 'Sweet' },
+                { name: 'Banana', taste: 'Sweet' }
+            ]);
+        });
+
+        it('moet een lege array teruggeven als er geen fruit aan de smaak voldoet\n', function () {
+            const fruits = [
+                { name: 'Apple', taste: 'Sweet' },
+                { name: 'Banana', taste: 'Sweet' },
+                { name: 'Orange', taste: 'Citrus' }
+            ];
+
+            // Gegeven smaak is "Salty", die niet voorkomt in de lijst
+            const result = showFruits(fruits, 'Salty');
+
+            // Geen vruchten passen bij de smaak, dus een lege array
+            assert.deepEqual(result, []);
+        });
+
+        it('moet fruit teruggeven dat aan de smaak voldoet, hoofdlettergevoelig (smaakinvoer met gemengde hoofdletters)', function () {
+            const fruits = [
+                { name: 'Apple', taste: 'Sweet' },
+                { name: 'Banana', taste: 'Sweet' },
+                { name: 'Orange', taste: 'Citrus' },
+                { name: 'Lemon', taste: 'Citrus' },
+                { name: 'Pineapple', taste: 'Tart' }
+            ];
+
+            // Gegeven smaak is "sWeEt", gemengde hoofdletters
+            const result = showFruits(fruits, 'sWeEt');
+
+            // Het resultaat moet de vruchten met de smaak "Sweet" zijn
+            assert.deepEqual(result, [
+                { name: 'Apple', taste: 'Sweet' },
+                { name: 'Banana', taste: 'Sweet' }
+            ]);
+        });
+    });
+
+    mocha.run();
 </script>
 </body>
 </html>

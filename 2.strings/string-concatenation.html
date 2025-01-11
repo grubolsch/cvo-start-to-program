@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Strings - nuttige functies</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Strings bij elkaar plakken (string concatenation)</h1>
+    <p>Heel vaak ga je strings met elkaar moeten combineren, dit noemt "concatenation".</p>
+
+    <p>Je kan dit op verschillende manieren doen, wij gaan nu de <b>+ operator</b> gebruiken.</p>
+    <p>Je hebt de plus al gebruikt om getallen op te tellen, maar je kan dus ook teksten bij elkaar plakken!</p>
+
+    <code><pre>
+        const str = 'Hello' + ' ' + 'World';
+        str; // 'Hello World'
+        Je kan ook += gebruiken, dan is a += b een korte versie van a = a + b.
+
+        // tweede voorbeeld
+        let str = 'Hello';
+        str += ' ';
+        str += 'World';
+        str; // 'Hello World'
+</div>
+
+<p>Er zijn ook andere manieren om hetzelfde resultaat te krijgen, zoals met <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">String literals</a>, maar daar ga we niet naar kijken in deze module.</p>
+</body>
+</html>

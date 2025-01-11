@@ -6,37 +6,51 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oefening 4 - Verander stuk tekst</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Oefening 4 - Verander stuk tekst</h1>
-    <p>Vraag de gebruiker om een woord in te geven, en een start en begin positie. Toon het gedeelte tussen deze 2 posities in UPPERCASE, en de rest in lowercase.</p>
-    <p>Voorbeeld: "Stoelendans", begin 6, einde 7 geeft "stoelENdans".</p>
-    <p>Zit je vast? Bekijk dan zeker even de <a href="nuttige-functies.html">lijst met nuttige functies!</a></p>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>Oefening 4 - Verander stuk tekst</h1>
+            <p>Vraag de gebruiker om een woord in te geven, en een start en begin positie. Toon het gedeelte tussen deze
+                2 posities in UPPERCASE, en de rest in lowercase.</p>
+            <p>Voorbeeld: "Stoelendans", begin 6, einde 7 geeft "stoelENdans".</p>
+            <p><strong>Opgelet:</strong> Javascript begint te tellen vanaf 0, maar wij beginnen te tellen vanaf 1!</p>
+            <p>Geef "Ongeldige start- of eindpositie" terug als de gebruiker een einde ingeeft dat kleiner is dan het begin, of als hij als begin 0 opgeeft of een groter getal dat <a href="https://www.w3schools.com/jsreF/jsref_length_string.asp">de totale lengte van de string</a>.</p>
+            <p>Zit je vast? Bekijk dan zeker even de <a href="nuttige-functies.html">lijst met nuttige functies!</a></p>
 
-    <form id="my-form">
-        <div class="mb-3">
-            <label for="word" class="form-label">Woord 1:</label>
-            <input type="text" class="form-control" id="word" name="word" required>
+            <form id="my-form">
+                <div class="mb-3">
+                    <label for="word" class="form-label">Woord 1:</label>
+                    <input type="text" class="form-control" id="word" name="word" required>
+                </div>
+                <div class="mb-3">
+                    <label for="start" class="form-label">Start positie:</label>
+                    <input type="number" class="form-control" id="start" name="start" required>
+                </div>
+                <div class="mb-3">
+                    <label for="end" class="form-label">Einde positie:</label>
+                    <input type="number" class="form-control" id="end" name="end" required>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Versturen</button>
+                </div>
+                <div class="mb-3">
+                    <h2 id="result"></h2>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="start" class="form-label">Start positie:</label>
-            <input type="number" class="form-control" id="start" name="start" required>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
         </div>
-        <div class="mb-3">
-            <label for="end" class="form-label">Einde positie:</label>
-            <input type="number" class="form-control" id="end" name="end" required>
-        </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Versturen</button>
-        </div>
-        <div class="mb-3">
-            <h2 id="result"></h2>
-        </div>
-    </form>
+    </div>
 </div>
+
 
 <script src="4.js"></script>
 <script>
@@ -49,6 +63,50 @@
 
         document.querySelector('#result').innerHTML = replace(word, start, end);
     });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('replace', function () {
+        it('Zou een deel van het woord in hoofdletters moeten tonen en de rest in kleine letters', function () {
+            assert.strictEqual(replace('Stoelendans', 6, 7), 'stoelENdans');
+        });
+
+        it('Zou het hele woord in hoofdletters moeten maken als start en eind het hele woord selecteren', function () {
+            assert.strictEqual(replace('stoelendans', 1, 11), 'STOELENDANS');
+        });
+
+        it('Zou alleen het begin van het woord in hoofdletters moeten maken', function () {
+            assert.strictEqual(replace('programmeren', 1, 3), 'PROgrammeren');
+        });
+
+        it('Zou alleen het einde van het woord in hoofdletters moeten maken', function () {
+            assert.strictEqual(replace('javascript', 7, 10), 'javascRIPT');
+        });
+
+        it('Zou "Ongeldige start- of eindpositie" moeten teruggeven voor negatieve startpositie', function () {
+            assert.strictEqual(replace('example', -1, 3), 'Ongeldige start- of eindpositie');
+        });
+
+        it('Zou "Ongeldige start- of eindpositie" moeten teruggeven als eind groter is dan de woordlengte', function () {
+            assert.strictEqual(replace('example', 2, 10), 'Ongeldige start- of eindpositie');
+        });
+
+        it('Zou "Ongeldige start- of eindpositie" moeten teruggeven als start groter is dan eind', function () {
+            assert.strictEqual(replace('example', 4, 2), 'Ongeldige start- of eindpositie');
+        });
+
+        it('Zou een lege string moeten teruggeven ongewijzigd', function () {
+            assert.strictEqual(replace('', 0, 1), 'Ongeldige start- of eindpositie');
+        });
+
+        it('Zou "Ongeldige start- of eindpositie" moeten teruggeven voor een start- of eindpositie buiten bereik', function () {
+            assert.strictEqual(replace('test', 10, 20), 'Ongeldige start- of eindpositie');
+        });
+    });
+
+    mocha.run();
 </script>
 </body>
 </html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 3.6</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>Oefening 3.6</h1>
+            <p>Zorg dat je via het formulier fruitsoorten kan toevoegen aan de array "list".</p>
+            <p>De gebruiker kan dan een index ingeven, of de naam van een ingegeven fruit, afhankelijk van de mode die
+                hij heeft geselecteerd.</p>
+            <p>Je toont dan volgende boodschap afhankelijk of het fruit is gevonden in de array:</p>
+            <ul>
+                <li>Onbekende fruitsoort (bij zoeken op fruit)</li>
+                <li>Onbekende index (bij zoeken op index)</li>
+                <li>Fruit <em>Appel</em> heeft als index <em>5</em></li>
+            </ul>
+            <p>Tip: Gebruik <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex"
+                    target="_blank">Array.findIndex()</a> en <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find"
+                    target="_blank">Array.find()</a>.</p>
+
+            <h2>Fruit toevoegen</h2>
+            <form id="my-form">
+                <div class="row mb-3">
+                    <label for="fruit" class="col-sm-2 col-form-label">Fruit:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="fruit" name="fruit" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-primary">Toevoegen</button>
+                    </div>
+                </div>
+            </form>
+            <form id="show-array" class="btn btn-secondary">
+                <div class="mb-3">
+                    <label for="searchForFruit" class="form-label">Zoeken:</label>
+                    <input type="text" class="form-control" id="searchForFruit" name="searchForFruit" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mode" class="form-label">Zoeken op:</label>
+                    <select name="mode" id="mode">
+                        <option value="index">Index</option>
+                        <option value="value">Waarde</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Zoeken</button>
+                </div>
+            </form>
+            <div class="mb-3">
+                <h2 id="result"></h2>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
+        </div>
+    </div>
+</div>
+
+<script src="6.js"></script>
+<script>
+    let list = [];
+    document.querySelector('#my-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        addFruit(
+            list,
+            document.querySelector('#fruit').value
+        );
+        document.querySelector('#fruit').value = '';
+    });
+    document.querySelector('#show-array').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        document.querySelector('#result').innerHTML = showFruits(
+            list,
+            document.querySelector('#mode').value,
+            document.querySelector('#searchForFruit').value
+        );
+    });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('Fruit functies', function () {
+        let fruits;
+
+        beforeEach(function () {
+            // Zorg ervoor dat de lijst wordt gereset voor elke test
+            fruits = ['appel', 'banaan', 'kers', 'druif', 'ananas'];
+        });
+
+        describe('addFruit', function () {
+            it('Moet een nieuw fruit aan de lijst toevoegen', function () {
+                addFruit(fruits, 'mango');
+                assert.strictEqual(fruits.length, 6);
+                assert.strictEqual(fruits[5], 'mango');
+            });
+        });
+
+        describe('showFruits', function () {
+            const fruits = ['appel', 'banaan', 'kers', 'druif'];
+
+            it('Zou het juiste fruit en index moeten teruggeven bij zoeken op waarde', function () {
+                const result = showFruits(fruits, 'value', 'kers');
+                assert.strictEqual(result, 'Fruit kers heeft als index 2');
+            });
+
+            it('Zou een foutmelding moeten teruggeven als het fruit niet wordt gevonden bij zoeken op waarde', function () {
+                const result = showFruits(fruits, 'value', 'mango');
+                assert.strictEqual(result, 'Onbekende fruitsoort (bij zoeken op fruit)');
+            });
+
+            it('Zou het juiste fruit en index moeten teruggeven bij zoeken op index', function () {
+                const result = showFruits(fruits, 'index', 1);
+                assert.strictEqual(result, 'Fruit banaan heeft als index 1');
+            });
+
+            it('Zou een foutmelding moeten teruggeven als de index buiten de array-grenzen valt', function () {
+                const result = showFruits(fruits, 'index', 5);
+                assert.strictEqual(result, 'Onbekende index (bij zoeken op index)');
+            });
+
+            it('Zou een foutmelding moeten teruggeven bij een negatieve index', function () {
+                const result = showFruits(fruits, 'index', -1);
+                assert.strictEqual(result, 'Onbekende index (bij zoeken op index)');
+            });
+
+            it('Zou een foutmelding moeten teruggeven bij een onbekende zoekmodus', function () {
+                const result = showFruits(fruits, 'unknown', 'appel');
+                assert.strictEqual(result, 'Onbekende zoekmodus');
+            });
+
+            it('Zou een foutmelding moeten teruggeven als de lijst leeg is', function () {
+                const result = showFruits([], 'value', 'appel');
+                assert.strictEqual(result, 'Onbekende fruitsoort (bij zoeken op fruit)');
+            });
+        });
+    });
+
+    mocha.run();
+</script>
+</body>
+</html>

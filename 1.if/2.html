@@ -6,34 +6,49 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oefening 2 - Temperatuurberekening</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Oefening 2 - Temperatuurberekening</h1>
-    <p>Vraag om een getal in te voeren, en converteer het vervolgens naar Fahrenheit of Celcius, afhankelijk welke optie de gebruiker kiest.
-        <br />Toon het resultaat op het scherm.</p>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Oefening 2 - Temperatuurberekening</h1>
+                    <p>Vraag om een getal in te voeren, en converteer het vervolgens naar Fahrenheit of Celcius,
+                        afhankelijk welke optie de gebruiker kiest.
+                        <br/>Toon het resultaat op het scherm.</p>
 
-    <form id="my-form">
-        <div class="mb-3">
-            <label for="mode" class="form-label">Bereken temperatuur naar:</label>
-            <select class="form-select" id="mode" name="mode" required>
-                <option value="celcius">Celcius</option>
-                <option value="fahrenheit">Fahrenheit</option>
-            </select>
+                    <form id="my-form">
+                        <div class="mb-3">
+                            <label for="mode" class="form-label">Bereken temperatuur naar:</label>
+                            <select class="form-select" id="mode" name="mode" required>
+                                <option value="celcius">Fahrenheit -> Celcius</option>
+                                <option value="fahrenheit">Celcius -> Fahrenheit</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="temperature" class="form-label">Temperatuur:</label>
+                            <input type="number" class="form-control" id="temperature" name="temperature" required>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Berekenen</button>
+                        </div>
+                        <div class="mb-3">
+                            <h2 id="result"></h2>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="temperature" class="form-label">Temperatuur:</label>
-            <input type="number" class="form-control" id="temperature" name="temperature" required>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
         </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Berekenen</button>
-        </div>
-        <div class="mb-3">
-            <h2 id="result"></h2>
-        </div>
-    </form>
+    </div>
 </div>
 
 <script src="2.js"></script>
@@ -46,6 +61,29 @@
 
         document.querySelector('#result').innerHTML = calculateTemperature(mode, temperature);
     });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('temperatuur berekening', function () {
+        it('Omrekenen naar celcius', function () {
+            assert.strictEqual(calculateTemperature('celcius', 212), 100);
+        });
+
+        it('Omrekenen naar Fahrenheit', function () {
+            assert.strictEqual(calculateTemperature('fahrenheit', 100), 212);
+        });
+
+        it('Omrekenen naar celcius met waarde 0', function () {
+            assert.strictEqual(Math.round(calculateTemperature('celcius', 0)), -18);
+        });
+
+        it('Omrekenen naar Fahrenheit met waarde 0', function () {
+            assert.strictEqual(Math.round(calculateTemperature('fahrenheit', 0)), 32);
+        });
+    });
+    mocha.run();
 </script>
 </body>
 </html>

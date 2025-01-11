@@ -6,27 +6,39 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oefening 3 - E-mail validatie</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Oefening 3 - E-mail validatie</h1>
-    <p>Vraag de gebruiker om een email address en geef terug om dit een geldige email is. (met een @-symbool en een punt na de @)</p>
-    <p>Zit je vast? Bekijk dan zeker even de <a href="nuttige-functies.html">lijst met nuttige functies!</a></p>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>Oefening 3 - E-mail validatie</h1>
+            <p>Vraag de gebruiker om een email address en geef de <a href="https://www.w3schools.com/js/js_booleans.asp">boolean value</a> <em>true</em> terug om dit een geldige email is. (met een @-symbool en een punt na de @)</p>
+            <p>Het @-symbool mag niet het eerste teken zijn.</p>
+            <p>Als het ongeldige email is geef je <em>false</em> terug.</p>
+            <p>Zit je vast? Bekijk dan zeker even de <a href="nuttige-functies.html">lijst met nuttige functies!</a></p>
 
-    <form id="my-form">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="text" class="form-control" id="email" name="email" required>
+            <form id="my-form">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="text" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Versturen</button>
+                </div>
+                <div class="mb-3">
+                    <h2 id="result"></h2>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Versturen</button>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
         </div>
-        <div class="mb-3">
-            <h2 id="result"></h2>
-        </div>
-    </form>
+    </div>
 </div>
 
 <script src="3.js"></script>
@@ -36,8 +48,62 @@
 
         let email = document.querySelector('#email').value;
 
-        document.querySelector('#result').innerHTML = validateEmail(email);
+        document.querySelector('#result').innerHTML = validateEmail(email) ? 'Geldige e-mail': 'Ongeldige e-mail';
     });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('validateEmail', function () {
+        it('Zou true moeten teruggeven voor een geldig e-mailadres', function () {
+            const result = validateEmail('test@example.com');
+            assert.strictEqual(result, true);
+        });
+
+        it('Zou false moeten teruggeven als het e-mailadres geen "@" bevat', function () {
+            const result = validateEmail('testexample.com');
+            assert.strictEqual(result, false);
+        });
+
+        it('Zou false moeten teruggeven als het e-mailadres geen punt na de "@" bevat', function () {
+            const result = validateEmail('test@examplecom');
+            assert.strictEqual(result, false);
+        });
+
+        it('Zou false moeten teruggeven als het e-mailadres begint met "@"', function () {
+            const result = validateEmail('@example.com');
+            assert.strictEqual(result, false);
+        });
+
+        it('Zou false moeten teruggeven als er geen punt in het e-mailadres zit', function () {
+            const result = validateEmail('test@example');
+            assert.strictEqual(result, false);
+        });
+
+        it('Zou true moeten teruggeven voor een e-mailadres met meerdere subdomeinen', function () {
+            const result = validateEmail('user@mail.subdomain.example.com');
+            assert.strictEqual(result, true);
+        });
+
+        it('Zou false moeten teruggeven voor een lege string', function () {
+            const result = validateEmail('');
+            assert.strictEqual(result, false);
+        });
+
+        it('Zou true moeten teruggeven voor een korte domeinnaam zoals "a@b.c"', function () {
+            const result = validateEmail('a@b.c');
+            assert.strictEqual(result, true);
+        });
+
+        it('Zou false moeten teruggeven als "@" na de laatste "." komt', function () {
+            const result = validateEmail('test.example@com');
+            assert.strictEqual(result, false);
+        });
+    });
+
+    mocha.run();
+
 </script>
 </body>
 </html>

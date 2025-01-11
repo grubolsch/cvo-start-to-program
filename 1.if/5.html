@@ -6,35 +6,47 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oefening 5 - Weer voor een wandeling?</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Oefening 5 - Weer voor een wandeling?</h1>
-    <p>Vraag de temperatuur en of het regent aan de gebruiker. Als de temperatuur boven de 20 en onder de 35 graden ligt, en het regent niet zeg je "Het is een goede dag voor een wandeling".</p>
-    <p>Als het boven de 35 graden is zeg je "het is te warm voor een wandeling". In de andere gevallen zeg je "Vandaag liever binnenblijven".</p>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>Oefening 5 - Weer voor een wandeling?</h1>
+            <p>Vraag de temperatuur en of het regent aan de gebruiker. Als het niet regent en de temperatuur boven de 20 en onder de 35 graden ligt zeg je "Het is een goede dag voor een wandeling".</p>
+            <p>Als het boven de 35 graden is zeg je "het is te warm voor een wandeling". In de andere gevallen zeg je
+                "Vandaag liever binnenblijven".</p>
 
-    <form id="my-form">
-        <div class="mb-3">
-            <label for="raining" class="form-label">Is it raining:</label>
-            <select class="form-select" id="raining" name="raining" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            <form id="my-form">
+                <div class="mb-3">
+                    <label for="raining" class="form-label">Is it raining:</label>
+                    <select class="form-select" id="raining" name="raining" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="temperature" class="form-label">Temperatuur:</label>
+                    <input type="number" class="form-control" id="temperature" name="temperature" required>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Berekenen</button>
+                </div>
+                <div class="mb-3">
+                    <h2 id="result"></h2>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="temperature" class="form-label">Temperatuur:</label>
-            <input type="number" class="form-control" id="temperature" name="temperature" required>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
         </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Berekenen</button>
-        </div>
-        <div class="mb-3">
-            <h2 id="result"></h2>
-        </div>
-    </form>
+    </div>
 </div>
+
 
 <script src="5.js"></script>
 <script>
@@ -44,8 +56,33 @@
         let raining = document.querySelector('#raining').value === '1';
         let temperature = document.querySelector('#temperature').value;
 
-        document.querySelector('#result').innerHTML = giveRecommondation(raining, temperature);
+        document.querySelector('#result').innerHTML = giveRecommendation(raining, temperature);
     });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('giveRecommendation', function () {
+        it('Het is een goede dag voor een wandeling', function () {
+            assert.strictEqual(giveRecommendation(false, 25), 'Het is een goede dag voor een wandeling');
+        });
+
+        it('Het is te warm voor een wandeling', function () {
+            assert.strictEqual(giveRecommendation(false, 35), 'Het is te warm voor een wandeling');
+            assert.strictEqual(giveRecommendation(true, 40), 'Het is te warm voor een wandeling');
+        });
+
+        it('Vandaag liever binnenblijven, het regent', function () {
+            assert.strictEqual(giveRecommendation(true, 25), 'Vandaag liever binnenblijven');
+            assert.strictEqual(giveRecommendation(true, 20), 'Vandaag liever binnenblijven');
+        });
+
+        it('Vandaag liever binnenblijven, het regent niet maar is te koud', function () {
+            assert.strictEqual(giveRecommendation(false, 10), 'Vandaag liever binnenblijven');
+        });
+    });
+    mocha.run();
 </script>
 </body>
 </html>

@@ -6,31 +6,41 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Oefening 1 - Kleuren kiezen</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-<div class="container mt-5">
-    <h1>Oefening 1 - Kleuren kiezen</h1>
-    <p>Vraag de gebruiker om de RGB waarde te geven voor een kleur, en verander de zwarte balk naar deze kleur.
-        Hiervoor zal je de in <a href="https://www.w3schools.com/css/css_colors_rgb.asp">CSS stijl</a> de RGB waarde
-        moeten teruggeven.</p>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>Oefening 1 - Kleuren kiezen</h1>
+            <p>Vraag de gebruiker om de <a href="https://nl.wikipedia.org/wiki/RGB-kleursysteem">RGB waarde</a> te geven voor een kleur, en verander de zwarte balk naar deze kleur.
+                Hiervoor zal je de in <a href="https://www.w3schools.com/css/css_colors_rgb.asp">CSS stijl</a> de RGB waarde moeten teruggeven.</p>
 
-    <p>Zit je vast? Bekijk dan zeker even de <a href="nuttige-functies.html">lijst met nuttige functies!</a></p>
+            <p>Zit je vast? Bekijk dan zeker even de <a href="nuttige-functies.html">lijst met nuttige functies</a>! Het deel over string concatenation ga je hier kunnen gebruiken.</p>
 
-    <h2 id="result"></h2>
+            <h2 id="result"></h2>
 
-    <div class="mb-3">
-        <label for="red" class="form-label">Red</label>
-        <input type="range" id="red" name="red" value="0" min="0" max="255">
+            <div class="mb-3">
+                <label for="red" class="form-label">Red</label>
+                <input type="range" id="red" name="red" value="0" min="0" max="255">
 
-        <label for="green" class="form-label">Green</label>
-        <input type="range" id="green" name="green" value="0" min="0" max="255">
+                <label for="green" class="form-label">Green</label>
+                <input type="range" id="green" name="green" value="0" min="0" max="255">
 
-        <label for="green" class="form-label">Blue</label>
-        <input type="range" id="blue" name="blue" value="0" min="0" max="255">
+                <label for="green" class="form-label">Blue</label>
+                <input type="range" id="blue" name="blue" value="0" min="0" max="255">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
+        </div>
     </div>
 </div>
+
 
 <style>
     #result {
@@ -52,6 +62,34 @@
     document.querySelector('#red').addEventListener('input', changeColorOnInput);
     document.querySelector('#green').addEventListener('input', changeColorOnInput);
     document.querySelector('#blue').addEventListener('input', changeColorOnInput);
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('changeColor', function () {
+        it('Rood werkt', function () {
+            assert.strictEqual(changeColor(100, 0, 0), 'rgb(100,0,0)');
+            assert.strictEqual(changeColor(200, 0, 0), 'rgb(200,0,0)');
+
+        });
+
+        it('Groen werkt', function () {
+            assert.strictEqual(changeColor(0, 100, 0), 'rgb(0,100,0)');
+            assert.strictEqual(changeColor(0, 200, 0), 'rgb(0,200,0)');
+
+        });
+
+        it('Blauw werkt', function () {
+            assert.strictEqual(changeColor(0, 0, 100), 'rgb(0,0,100)');
+            assert.strictEqual(changeColor(0, 0, 200), 'rgb(0,0,200)');
+        });
+
+        it('Alle kleuren samen werken', function () {
+            assert.strictEqual(changeColor(200, 200, 200), 'rgb(200,200,200)');
+        });
+    });
+    mocha.run();
 </script>
 </body>
 </html>

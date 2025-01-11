@@ -3,13 +3,19 @@ function addFruit(list, element) {
 
     console.log(list, element);
 
-    // Opgelet, in deze oefening kan je een foutmelding teruggeven in deze functie.
-    // Indien er geen foutmelding is, return dan een lege string
-    return 'Ongeldige fruitsoort';
+    let valid = (validFruits.indexOf(element) > -1);
+
+    if(valid) {
+        list.push(element);
+    }
+
+    return valid;
 }
 
 function showFruits(list) {
     console.log(list);
+
+    return list.join(',');
 
     return '';
 }
