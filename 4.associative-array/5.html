@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="col-sm-3">
-                    <button type="submit" class="btn btn-primary">Zoeken</button>
+                    <button type="submit" class="btn btn-primary">Toevoegen</button>
                 </div>
             </form>
             <div class="mb-3" id="result">
@@ -94,6 +94,97 @@
 
     mocha.setup({
         ui: 'bdd',
+    });
+
+    describe('addFruit', function () {
+
+        it('moet een nieuw fruit toevoegen aan de lijst', function () {
+            const fruits = [
+                {
+                    name: 'Apple',
+                    color: 'red',
+                    taste: 'sweet',
+                    nutrition: { calories: 95, carbs: 25, fiber: 4 }
+                }
+            ];
+
+            const result = addFruit(fruits, 'Banana', 'yellow', 'sweet', 105, 27, 3);
+
+            assert.strictEqual(result.length, 2);
+            assert.deepEqual(result[1], {
+                name: 'Banana',
+                color: 'yellow',
+                taste: 'sweet',
+                nutrition: {
+                    calories: 105,
+                    carbs: 27,
+                    fiber: 3
+                }
+            });
+        });
+
+        it('moet een lege lijst correct aanvullen met een fruitsoort', function () {
+            const fruits = [];
+
+            const result = addFruit(fruits, 'Orange', 'orange', 'citrus', 62, 15, 3);
+
+            assert.strictEqual(result.length, 1);
+            assert.deepEqual(result[0], {
+                name: 'Orange',
+                color: 'orange',
+                taste: 'citrus',
+                nutrition: {
+                    calories: 62,
+                    carbs: 15,
+                    fiber: 3
+                }
+            });
+        });
+
+        it('moet meerdere fruitsoorten correct toevoegen aan de lijst', function () {
+            const fruits = [
+                {
+                    name: 'Apple',
+                    color: 'red',
+                    taste: 'sweet',
+                    nutrition: { calories: 95, carbs: 25, fiber: 4 }
+                }
+            ];
+
+            addFruit(fruits, 'Banana', 'yellow', 'sweet', 105, 27, 3);
+            const result = addFruit(fruits, 'Orange', 'orange', 'citrus', 62, 15, 3);
+
+            assert.strictEqual(result.length, 3);
+            assert.deepEqual(result[2], {
+                name: 'Orange',
+                color: 'orange',
+                taste: 'citrus',
+                nutrition: {
+                    calories: 62,
+                    carbs: 15,
+                    fiber: 3
+                }
+            });
+        });
+
+        it('moet een lege fruitsoort correct toevoegen met standaardwaarden', function () {
+            const fruits = [];
+
+            const result = addFruit(fruits, 'Mystery Fruit', '', '', 0, 0, 0);
+
+            assert.strictEqual(result.length, 1);
+            assert.deepEqual(result[0], {
+                name: 'Mystery Fruit',
+                color: '',
+                taste: '',
+                nutrition: {
+                    calories: 0,
+                    carbs: 0,
+                    fiber: 0
+                }
+            });
+        });
+
     });
 
     mocha.run();
