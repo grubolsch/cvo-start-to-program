@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 7 - Temperatuurberekening</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Oefening 7 - Piano</h1>
+                    <p>Druk op <strong>C, D, E, F, G, A of B</strong> op je toetsenbord om een toon te spelen!</p>
+
+                    <p>Vorm de ingedrukte toets (de noot) om naar een frequency.</p>
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Noot</th>
+                            <th>Frequentie in Hz</th>
+                            <th>Beschrijving</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>C</td>
+                            <td>261.63</td>
+                            <td>Do (lage toon, standaard "C")</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>293.66</td>
+                            <td>Re (iets hoger dan C)</td>
+                        </tr>
+                        <tr>
+                            <td>E</td>
+                            <td>329.63</td>
+                            <td>Mi (hogere toon dan D)</td>
+                        </tr>
+                        <tr>
+                            <td>F</td>
+                            <td>349.23</td>
+                            <td>Fa (net boven Mi)</td>
+                        </tr>
+                        <tr>
+                            <td>G</td>
+                            <td>392.00</td>
+                            <td>Sol (veelvoorkomende middennoot)</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>440.00</td>
+                            <td>La (standaard concert-toon)</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>493.88</td>
+                            <td>Si (hoogste standaardnoot in dit orgel)</td>
+                        </tr>
+                        <tr>
+                            <td><i>Andere toetsen</i></td>
+                            <td>0</td>
+                            <td>Geeft een melding: "Onbekende toon"</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Tip: Gebruik hiervoor <a href="https://www.w3schools.com/js/js_switch.asp">een switch</a>.</p>
+
+                    <h2 id="note"></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
+        </div>
+    </div>
+</div>
+
+<script src="7.js"></script>
+<script>
+    function playTone(note) {
+        let frequency = getFrequency(note);
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.frequency.setValueAtTime(getFrequency(note), audioCtx.currentTime);
+        oscillator.type = 'sine';
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.start();
+        gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+        oscillator.stop(audioCtx.currentTime + 1);
+
+        if (frequency === 0) {
+            document.querySelector('#note').innerText = "Onbekende toon";
+        } else {
+            document.querySelector('#note').innerText = note;
+        }
+    }
+
+    // Event listener voor toetsen
+    document.addEventListener('keydown', (event) => {
+        const note = event.key.toUpperCase();
+        playTone(note);
+    });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('getFrequency', function () {
+        it('Geef frequency 261.63 voor toets C', function () {
+            assert.strictEqual(getFrequency('C'), 261.63);
+        });
+
+        it('Geef frequency 293.66 voor toets D', function () {
+            assert.strictEqual(getFrequency('D'), 293.66);
+        });
+
+        it('Geef frequency 329.63 voor toets E', function () {
+            assert.strictEqual(getFrequency('E'), 329.63);
+        });
+
+        it('Geef frequency 349.23 voor toets F', function () {
+            assert.strictEqual(getFrequency('F'), 349.23);
+        });
+
+        it('Geef frequency 392.00 voor toets G', function () {
+            assert.strictEqual(getFrequency('G'), 392.00);
+        });
+
+        it('Geef frequency 440.00 voor toets A', function () {
+            assert.strictEqual(getFrequency('A'), 440.00);
+        });
+
+        it('Geef frequency 493.88 voor toets B', function () {
+            assert.strictEqual(getFrequency('B'), 493.88);
+        });
+
+        it('Geef frequency 0 voor een onbekende toets', function () {
+            assert.strictEqual(getFrequency('Z'), 0);
+        });
+    });
+
+
+    mocha.run();
+</script>
+</body>
+</html>
