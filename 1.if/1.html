@@ -61,14 +61,15 @@
     });
 
     describe('greeting', function () {
-        it('Toon welkom bij 18 jaar', function () {
+        it('Toon welkom (man)', function () {
             assert.strictEqual(greeting('man', 'John'), 'Meneer John');
         });
 
-        it('Toon welkom bij meerderjarig', function () {
+        it('Toon welkom (vrouw)', function () {
             assert.strictEqual(greeting('vrouw', 'Jane'), 'Mevrouw Jane');
         });
     });
+
     mocha.run();
 </script>
 </body>

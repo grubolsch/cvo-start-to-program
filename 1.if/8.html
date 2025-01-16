@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oefening 8 - Login systeem</title>
+    <link rel="stylesheet" href="../lib/mocha/mocha.css">
+    <script src="../lib/mocha/mocha.js"></script>
+    <script src="../lib/assert.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Oefening 8 - Login systeem</h1>
+                    <h2>login()</h2>
+                    <p>Maak een login systeem, deze oefening heeft 2 functies die je gaat moeten implementeren.</p>
+                    <p>De login functie vergelijkt een ingevoerde gebruikersnaam en wachtwoord met de opgeslagen gegevens en retourneert de boolean <em>true</em> als beide overeenkomen, anders <em>false</em>.</p>
+                    <h2>isRegisterValid()</h2>
+                    <p>De isRegisterValid functie controleert of de ingevoerde gebruikersnaam en wachtwoord voelt aan de volgende vereiste:</p>
+
+                    <ul>
+                        <li>Wachtwoorden niet hetzelfde? Geef de string "Wachtwoord niet hetzelfde." terug</li>
+                        <li>Gebruikersnaam minder lang dan 4 tekens? Geef de string "Gebruikersnaam moet minstens 4 tekens lang zijn." terug</li>
+                        <li>Wachtwoord minder lang dan 6 tekens? Geef de string "Wachtwoord moet minstens 6 tekens lang zijn." terug</li>
+                    </ul>
+
+                    <p>Als alles geldig is, geef je de boolean <em>true</em> terug.</p>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Inloggen</h2>
+                            <form id="login-form">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Gebruikersnaam:</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Wachtwoord:</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Berekenen</button>
+                                </div>
+                                <div class="mb-3">
+                                    <h2 id="result"></h2>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-6">
+                            <h2>Registratie</h2>
+                            <form id="register-form">
+                                <div class="mb-3">
+                                    <label for="username-register" class="form-label">Gebruikersnaam:</label>
+                                    <input type="text" class="form-control" id="username-register"
+                                           name="username-register" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password-register" class="form-label">Wachtwoord:</label>
+                                    <input type="password" class="form-control" id="password-register"
+                                           name="password-register" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password-register-2" class="form-label">Wachtwoord:</label>
+                                    <input type="password" class="form-control" id="password-register-2"
+                                           name="password-register-2" required>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Berekenen</button>
+                                </div>
+                                <div class="mb-3">
+                                    <h2 id="result-register"></h2>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div id="mocha"></div>
+        </div>
+    </div>
+</div>
+
+<script src="8.js"></script>
+<script>
+    let username, password;
+
+    document.querySelector('#login-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let newUsername = document.querySelector('#username').value;
+        let newPassword = document.querySelector('#password').value;
+
+        document.querySelector('#result').innerHTML = login(username, password, newUsername, newPassword) ? 'Ingelogd' : 'Incorrecte combinatie gebruikersnaam/wachtwoord.';
+    });
+
+    document.querySelector('#register-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let newUsername = document.querySelector('#username-register').value;
+        let newPassword = document.querySelector('#password-register').value;
+        let newPassword2 = document.querySelector('#password-register-2').value;
+
+        let response = isRegisterValid(newUsername, newPassword, newPassword2);
+        if (response === true) {
+            username = newUsername;
+            password = newPassword;
+
+            document.querySelector('#result-register').innerHTML = 'Registratie gelukt!';
+        } else {
+            document.querySelector('#result-register').innerHTML = response;
+        }
+    });
+
+    mocha.setup({
+        ui: 'bdd',
+    });
+
+    describe('login', function () {
+        it('moet true retourneren voor correcte gebruikersnaam en wachtwoord', function () {
+            assert.strictEqual(login('user123', 'pass123', 'user123', 'pass123'), true);
+        });
+
+        it('moet false retourneren voor een onjuiste gebruikersnaam', function () {
+            assert.strictEqual(login('user123', 'pass123', 'wrongUser', 'pass123'), false);
+        });
+
+        it('moet false retourneren voor een onjuist wachtwoord', function () {
+            assert.strictEqual(login('user123', 'pass123', 'user123', 'wrongPass'), false);
+        });
+
+        it('moet false retourneren voor zowel een onjuiste gebruikersnaam als een onjuist wachtwoord', function () {
+            assert.strictEqual(login('user123', 'pass123', 'wrongUser', 'wrongPass'), false);
+        });
+    });
+
+    describe('isRegisterValid', function () {
+        it('moet true retourneren voor geldige gebruikersnaam en overeenkomende wachtwoorden', function () {
+            assert.strictEqual(isRegisterValid('user123', 'password123', 'password123'), true);
+        });
+
+        it('moet een foutmelding geven voor niet-overeenkomende wachtwoorden', function () {
+            assert.strictEqual(isRegisterValid('user123', 'password123', 'password321'), 'Wachtwoord niet hetzelfde.');
+        });
+
+        it('moet een foutmelding geven voor een gebruikersnaam korter dan 4 tekens', function () {
+            assert.strictEqual(isRegisterValid('usr', 'password123', 'password123'), 'Gebruikersnaam moet minstens 4 tekens lang zijn.');
+        });
+
+        it('moet een foutmelding geven voor een wachtwoord korter dan 6 tekens', function () {
+            assert.strictEqual(isRegisterValid('user123', 'pass', 'pass'), 'Wachtwoord moet minstens 6 tekens lang zijn.');
+        });
+
+        it('moet een foutmelding geven voor zowel korte gebruikersnaam als niet-overeenkomende wachtwoorden', function () {
+            assert.strictEqual(isRegisterValid('usr', 'password123', 'password321'), 'Wachtwoord niet hetzelfde.');
+        });
+    });
+
+    mocha.run();
+</script>
+</body>
+</html>

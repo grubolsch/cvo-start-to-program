@@ -1,5 +1,6 @@
 function greeting(age) {
-    // Hier komt jou code
+    // Hier komt jouw code
+    console.log(age);
 
     if(age >= 18) {
         return 'Welkom!'
