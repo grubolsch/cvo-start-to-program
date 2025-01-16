@@ -1,6 +1,7 @@
 function showFruits(fruits, taste) {
     console.log(fruits, taste);
 
-    // Filter fruitsoorten die dezelfde smaak hebben, hoofdletterongevoelig
+    //start solution
     return fruits.filter(fruit => fruit.taste.toLowerCase() === taste.toLowerCase());
+    //end
 }

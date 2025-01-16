@@ -1,12 +1,15 @@
 function addFruit(list, element) {
     console.log(list, element);
 
-    list.push(element);
+    //start solution
+    list.push(element)
+    //end
 }
 
 function showFruits(list, mode, search) {
     console.log(list, mode, search);
 
+    //start solution
     let fruit;
     let index;
 
@@ -29,4 +32,7 @@ function showFruits(list, mode, search) {
     }
 
     return 'Fruit ' + fruit + ' heeft als index ' + index;
+    //end
+
+    return '';
 }

@@ -1,6 +1,7 @@
 function replace(word, start, end) {
     console.log(word, start, end);
 
+    //start solution
     if (start < 0 || end > word.length || start > end) {
         return 'Ongeldige start- of eindpositie';
     }
@@ -10,6 +11,7 @@ function replace(word, start, end) {
     const after = word.slice(end).toLowerCase();
 
     return before + middle + after;
+    //end
 
     return '';
 }

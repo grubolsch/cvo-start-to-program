@@ -1,6 +1,7 @@
 function calculateNumber(mode, number1, number2) {
-    // Hier komt jouw code
+    console.log(mode, number1, number2);
 
+    //start solution
     switch(mode) {
         case '+':
             return number1 + number2;
@@ -15,7 +16,7 @@ function calculateNumber(mode, number1, number2) {
             return number1 / number2;
             break;
     }
+    //end
 
-    console.log(mode, number1, number2);
     return 'Hier komt jouw resultaat';
 }

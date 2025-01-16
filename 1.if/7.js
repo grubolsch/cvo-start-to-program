@@ -2,6 +2,8 @@ function getFrequency(frequency) {
     console.log(frequency);
 
     // Gebruik een switch-statement om de frequentie te bepalen
+
+    //start solution
     switch (frequency) {
         case 'C':
             return 261.63; // Do
@@ -20,4 +22,5 @@ function getFrequency(frequency) {
         default:
             return 0;
     }
+    //end
 }

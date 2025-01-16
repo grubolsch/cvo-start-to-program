@@ -1,6 +1,7 @@
 function showBmiCategory(gender, weightInKG, lengthInCm) {
     console.log(gender, weightInKG, lengthInCm);
 
+    //start solution
     let lengteInM = lengthInCm / 100;
     let bmi = weightInKG/(lengteInM * lengteInM);
 
@@ -23,6 +24,7 @@ function showBmiCategory(gender, weightInKG, lengthInCm) {
     } else {
         return 'Obesitas';
     }
+    //end
 
     return '';
 }

@@ -1,7 +1,7 @@
 function translate(phrase, language) {
-    // Hier komt jouw code
 	console.log(phrase, language);
 
+    //start solution
     if (phrase === 'begroeting' && language === 'ENG') {
         return 'Hello';
     }
@@ -20,6 +20,7 @@ function translate(phrase, language) {
     if (phrase === 'kostprijs' && language === 'FR') {
         return 'Ça coûte combien ?';
     }
+    //end
 		
     return 'Hier komt jouw resultaat';
 }
