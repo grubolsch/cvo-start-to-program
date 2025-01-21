@@ -17,10 +17,21 @@
     <div class="row">
         <div class="col-sm-8">
             <h1>Oefening 3 - E-mail validatie</h1>
-            <p>Vraag de gebruiker om een email address en geef de <a href="https://www.w3schools.com/js/js_booleans.asp">boolean value</a> <em>true</em> terug om dit een geldige email is. (met een @-symbool en een punt na de @)</p>
+            <p>Vraag de gebruiker om een email address en geef de <a
+                    href="https://www.w3schools.com/js/js_booleans.asp">boolean value</a> <em>true</em> terug om dit een
+                geldige email is. (met een @-symbool en een punt na de @)</p>
             <p>Het @-symbool mag niet het eerste teken zijn.</p>
             <p>Als het ongeldige email is geef je <em>false</em> terug.</p>
-            <p>Zit je vast? Bekijk dan zeker even de <a href="nuttige-functies.html">lijst met nuttige functies!</a></p>
+            <p>Zit je vast? Bekijk dan zeker even deze lijst met nuttige functies!</p>
+
+            <ul>
+                <li>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf">String.indexOf()</a>
+                </li>
+                <li>
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/lastIndexOf">String.lastIndexOf()</a>
+                </li>
+            </ul>
 
             <form id="my-form">
                 <div class="mb-3">
@@ -48,7 +59,7 @@
 
         let email = document.querySelector('#email').value;
 
-        document.querySelector('#result').innerHTML = validateEmail(email) ? 'Geldige e-mail': 'Ongeldige e-mail';
+        document.querySelector('#result').innerHTML = validateEmail(email) ? 'Geldige e-mail' : 'Ongeldige e-mail';
     });
 
     mocha.setup({
