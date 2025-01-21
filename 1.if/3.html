@@ -5,55 +5,51 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Oefening 3 - Rekenmachine</title>
+    <title>Oefening 3 - Uitgebreide begroeting</title>
     <link rel="stylesheet" href="../lib/mocha/mocha.css">
     <script src="../lib/mocha/mocha.js"></script>
     <script src="../lib/assert.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
 <div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-sm-8">
-            <h1>Oefening 3 - Rekenmachine</h1>
-            <p>Rekenmachine: Maak een simpele rekenmachine die de gebruiker twee getallen laat invoeren en vervolgens
-                vraagt om een bewerkingsmodus (optellen, aftrekken, vermenigvuldigen of delen). Voer de berekening uit
-                en toon het resultaat op het scherm.</p>
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>Oefening 3 - Uitgebreide begroeting</h1>
+                <p>Geef de volgende zin terug bij studenten: "Hallo, mijn naam is <em>name</em>, ik ben <em>age</em> jaren oud. Ik ben een student.".
+                </p>
+                <p>Geef de volgende zin terug bij niet studenten: "Hallo, mijn naam is <em>name</em>, ik ben <em>age</em> jaren oud. Ik ben geen student.".
+                </p>
 
-            <p>Tip 1: Gebruik hiervoor <a href="https://www.w3schools.com/js/js_switch.asp">een switch</a>.</p>
-            <p>Tip 2: Problemen met optellen? Probeer <a href="https://www.w3schools.com/jsref/jsref_number.asp">Number()</a>.
-                Opgelet: hoofdlettergevoelig!</p>
-
-            <form id="my-form">
-                <div class="mb-3">
-                    <label for="mode" class="form-label">Mode:</label>
-                    <select class="form-select" id="mode" name="mode" required>
-                        <option value="+">+</option>
-                        <option value="-">-</option>
-                        <option value="*">*</option>
-                        <option value="/">/</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="number-1" class="form-label">Getal 1:</label>
-                    <input type="number" class="form-control" id="number-1" name="number-1" required>
-                </div>
-                <div class="mb-3">
-                    <label for="number-2" class="form-label">Getal 2:</label>
-                    <input type="number" class="form-control" id="number-2" name="number-2" required>
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Berekenen</button>
-                </div>
-                <div class="mb-3">
-                    <h2 id="result"></h2>
-                </div>
-            </form>
-        </div>
-        <div class="col-sm-4">
-            <div id="mocha"></div>
-        </div>
+                <form id="my-form">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Naam:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Leeftijd:</label>
+                        <input type="number" class="form-control" id="age" name="age" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="isStudent" class="form-label">Is student:</label>
+                        <select class="form-control" id="isStudent" name="isStudent">
+                            <option value="0">Nee</option>
+                            <option value="1">Ja</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Versturen</button>
+                    </div>
+                    <div class="mb-3">
+                        <h2 id="result"></h2>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <div id="mocha"></div>
+            </div>
     </div>
 </div>
 
@@ -62,36 +58,31 @@
     document.querySelector('#my-form').addEventListener('submit', (event) => {
         event.preventDefault();
 
-        let mode = document.querySelector('#mode').value;
-        let number1 = document.querySelector('#number-1').value;
-        let number2 = document.querySelector('#number-2').value;
+        let name = document.querySelector('#name').value;
+        let age = document.querySelector('#age').value;
+        let isStudent = document.querySelector('#isStudent').value;
 
-        document.querySelector('#result').innerHTML = calculateNumber(mode, number1, number2);
+        document.querySelector('#result').innerHTML = showGreeting(name, age, isStudent);
     });
 
     mocha.setup({
         ui: 'bdd',
     });
 
-    describe('calculateNumber', function () {
-        it('Optellen', function () {
-            assert.strictEqual(calculateNumber('+', 2, 4), 6);
+    describe('Testing showGreeting', function() {
+        it('Geeft correcte begroeting voor niet studenten.', function() {
+            const result = showGreeting("Jan", 25, false);
+            const expected = "Hallo, mijn naam is Jan, ik ben 25 jaren oud. Ik ben geen student.";
+            assert.strictEqual(result, expected);
         });
 
-        it('Aftrekken', function () {
-            assert.strictEqual(calculateNumber('-', 6, 2), 4);
-            assert.strictEqual(calculateNumber('-', 2, 4), -2);
-        });
-
-        it('Vermenigvuldigen', function () {
-            assert.strictEqual(calculateNumber('*', 2, 4), 8);
-        });
-
-        it('Delen', function () {
-            assert.strictEqual(calculateNumber('/', 8, 4), 2);
-            assert.strictEqual(calculateNumber('/', 7, 2), 3.5);
+        it('Geeft correcte begroeting voor studenten.', function() {
+            const result = showGreeting("Lisa", 22, true);
+            const expected = "Hallo, mijn naam is Lisa, ik ben 22 jaren oud. Ik ben een student.";
+            assert.strictEqual(result, expected);
         });
     });
+
     mocha.run();
 </script>
 </body>

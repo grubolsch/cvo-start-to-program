@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Oefening 4 - begroeting</title>
+    <title>Oefening 4 - Temperatuurberekening</title>
     <link rel="stylesheet" href="../lib/mocha/mocha.css">
     <script src="../lib/mocha/mocha.js"></script>
     <script src="../lib/assert.js"></script>
@@ -16,61 +16,34 @@
 <div class="container-fluid mt-5">
     <div class="row">
         <div class="col-sm-8">
-            <h1>Oefening 4 - BMI berekening</h1>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>Oefening 4 - Temperatuurberekening</h1>
+                    <p>Vraag om een getal in te voeren, en converteer het vervolgens naar Fahrenheit of Celcius,
+                        afhankelijk welke optie de gebruiker kiest.
+                        <br/>Toon het resultaat op het scherm.</p>
 
-            <p>Vraag het geslacht van de gebruiker, en zijn/haar gewicht en lengte. Bereken dan het BMI.</p>
-            <p>De BMI is gebaseerd op het lichaamsgewicht gedeeld door de lichaamslengte in meters in het kwadraat. (BMI = kg/(lengte in M * lengte in M)).</p>
-
-            <p>Geef dan weer in welke categorie de gebruiker valt:</p>
-            <p>Er is een <strong>verschil tussen mannen en vrouwen</strong>: ondergewicht komt bij mannen al voor vanaf
-                een BMI kleiner dan 20 terwijl dat bij vrouwen pas vanaf een BMI kleiner dan 18,5 is.</p>
-
-            <table>
-                <tr>
-                    <th>Body Mass Index (BMI)</th>
-                    <th>Classificatie</th>
-                </tr>
-                <tr>
-                    <td>&lt; 18,5 (vrouw) / 20 (man)</td>
-                    <td>Ondergewicht</td>
-                </tr>
-                <tr>
-                    <td>18,5 (vrouw), 20 (man) – 24,9</td>
-                    <td>Normaal gewicht</td>
-                </tr>
-                <tr>
-                    <td>25 – 29,9</td>
-                    <td>Overgewicht</td>
-                </tr>
-                <tr>
-                    <td>30 <</td>
-                    <td>Obesitas</td>
-                </tr>
-            </table>
-
-            <form id="my-form">
-                <div class="mb-3">
-                    <label for="gender" class="form-label">Geslacht:</label>
-                    <select class="form-select" id="gender" name="gender" required>
-                        <option value="man">Man</option>
-                        <option value="vrouw">Vrouw</option>
-                    </select>
+                    <form id="my-form">
+                        <div class="mb-3">
+                            <label for="mode" class="form-label">Bereken temperatuur naar:</label>
+                            <select class="form-select" id="mode" name="mode" required>
+                                <option value="celcius">Fahrenheit -> Celcius</option>
+                                <option value="fahrenheit">Celcius -> Fahrenheit</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="temperature" class="form-label">Temperatuur:</label>
+                            <input type="number" class="form-control" id="temperature" name="temperature" required>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Berekenen</button>
+                        </div>
+                        <div class="mb-3">
+                            <h2 id="result"></h2>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="length" class="form-label">Lengte (CM):</label>
-                    <input type="number" class="form-control" id="length" name="length" required>
-                </div>
-                <div class="mb-3">
-                    <label for="weight" class="form-label">Gewicht (KG):</label>
-                    <input type="number" class="form-control" id="weight" name="weight" required>
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Bereken</button>
-                </div>
-                <div class="mb-3">
-                    <h2 id="result"></h2>
-                </div>
-            </form>
+            </div>
         </div>
         <div class="col-sm-4">
             <div id="mocha"></div>
@@ -83,65 +56,31 @@
     document.querySelector('#my-form').addEventListener('submit', (event) => {
         event.preventDefault();
 
-        let gender = document.querySelector('#gender').value;
-        let weight = document.querySelector('#weight').value;
-        let length = document.querySelector('#length').value;
+        let mode = document.querySelector('#mode').value;
+        let temperature = document.querySelector('#temperature').value;
 
-        document.querySelector('#result').innerHTML = showBmiCategory(gender, weight, length);
+        document.querySelector('#result').innerHTML = calculateTemperature(mode, temperature);
     });
 
     mocha.setup({
         ui: 'bdd',
     });
 
-    describe('showBmiCategory', function () {
-        it('Ondergewicht voor een man', function () {
-            assert.strictEqual(showBmiCategory('man', 40, 170), 'Ondergewicht');
+    describe('temperatuur berekening', function () {
+        it('Omrekenen naar celcius', function () {
+            assert.strictEqual(calculateTemperature('celcius', 212), 100);
         });
 
-        it('Normaal gewicht voor een man', function () {
-            assert.strictEqual(showBmiCategory('man', 60, 170), 'Normaal gewicht');
+        it('Omrekenen naar Fahrenheit', function () {
+            assert.strictEqual(calculateTemperature('fahrenheit', 100), 212);
         });
 
-        it('Overgewicht voor een man', function () {
-            assert.strictEqual(showBmiCategory('man', 70, 160), 'Overgewicht');
+        it('Omrekenen naar celcius met waarde 0', function () {
+            assert.strictEqual(Math.round(calculateTemperature('celcius', 0)), -18);
         });
 
-        it('Obesitas voor een man', function () {
-            assert.strictEqual(showBmiCategory('man', 100, 160), 'Obesitas');
-        });
-
-        it('Ondergewicht voor een vrouw', function () {
-            assert.strictEqual(showBmiCategory('vrouw', 40, 170), 'Ondergewicht'); // Fixed 'man' to 'vrouw'
-        });
-
-        it('Normaal gewicht voor een vrouw', function () {
-            assert.strictEqual(showBmiCategory('vrouw', 55, 170), 'Normaal gewicht');
-        });
-
-        it('Overgewicht voor een vrouw', function () {
-            assert.strictEqual(showBmiCategory('vrouw', 70, 160), 'Overgewicht');
-        });
-
-        it('Obesitas voor een vrouw', function () {
-            assert.strictEqual(showBmiCategory('vrouw', 100, 160), 'Obesitas');
-        });
-
-        // Boundary tests
-        it('Boundary test: Man met BMI 20 is niet Ondergewicht', function () {
-            assert.strictEqual(showBmiCategory('man', 68.5, 185), 'Normaal gewicht'); // BMI = 20
-        });
-
-        it('Boundary test: Man met BMI 19.8 is Ondergewicht', function () {
-            assert.strictEqual(showBmiCategory('man', 67.9, 185), 'Ondergewicht'); // BMI = 19.9
-        });
-
-        it('Boundary test: Vrouw met BMI 18.5 is niet Ondergewicht', function () {
-            assert.strictEqual(showBmiCategory('vrouw', 63.5, 185), 'Normaal gewicht'); // BMI = 18.5
-        });
-
-        it('Boundary test: Vrouw met BMI 18.4 is Ondergewicht', function () {
-            assert.strictEqual(showBmiCategory('vrouw', 63, 185), 'Ondergewicht'); // BMI = 18.4
+        it('Omrekenen naar Fahrenheit met waarde 0', function () {
+            assert.strictEqual(Math.round(calculateTemperature('fahrenheit', 0)), 32);
         });
     });
     mocha.run();

@@ -1,22 +1,15 @@
-function calculateNumber(mode, number1, number2) {
-    console.log(mode, number1, number2);
+function showGreeting(name, age, isStudent) {
+    console.log(name, age, isStudent);
 
     //start solution
-    switch(mode) {
-        case '+':
-            return number1 + number2;
-            break;
-        case '-':
-            return number1 - number2;
-            break;
-        case '*':
-            return number1 * number2;
-            break;
-        case '/':
-            return number1 / number2;
-            break;
+    let studentSentence = "Ik ben geen student.";
+
+    if(isStudent) {
+        studentSentence = "Ik ben een student."
     }
+
+    return "Hallo, mijn naam is "+ name + ", ik ben " + age + " jaren oud. " + studentSentence;
     //end
 
-    return 'Hier komt jouw resultaat';
+    return "";
 }

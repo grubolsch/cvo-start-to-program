@@ -1,30 +1,12 @@
-function showBmiCategory(gender, weightInKG, lengthInCm) {
-    console.log(gender, weightInKG, lengthInCm);
+function calculateTemperature(mode, temperature) {
+    console.log(mode, temperature);
 
     //start solution
-    let lengteInM = lengthInCm / 100;
-    let bmi = weightInKG/(lengteInM * lengteInM);
-
-    if(gender === 'man') {
-        if (bmi < 20) {
-            return 'Ondergewicht';
-        } else if (bmi < 24.9) {
-            return 'Normaal gewicht';
-        }
-    } else { // deze else kan eigenlijk weg, probeer maar!
-        if (bmi < 18.5) {
-            return 'Ondergewicht';
-        } else if (bmi < 24.9) {
-            return 'Normaal gewicht';
-        }
+    if(mode === 'celcius') {
+        return (temperature - 32) / 1.8;
     }
-
-    if (bmi < 29.9) {
-        return 'Overgewicht';
-    } else {
-        return 'Obesitas';
-    }
+    return (temperature * 1.8) + 32;
     //end
 
-    return '';
+    return 'Hier komt jouw resultaat';
 }

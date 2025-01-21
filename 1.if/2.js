@@ -1,12 +1,13 @@
-function calculateTemperature(mode, temperature) {
-    console.log(mode, temperature);
+function hasValidDiscount(amountOfProducts) {
+    console.log(amountOfProducts);
 
     //start solution
-    if(mode === 'celcius') {
-        return (temperature - 32) / 1.8;
+    if(amountOfProducts >= 10) {
+        return "Je hebt korting";
     }
-    return (temperature * 1.8) + 32;
+
+    return "Je hebt geen korting";
     //end
 
-    return 'Hier komt jouw resultaat';
+    return "";
 }
