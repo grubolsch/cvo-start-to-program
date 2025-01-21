@@ -1,17 +1,13 @@
 function addFruit(list, element) {
     console.log(list, element);
 
-    //start solution
-    list.push(element)
-    //end
+    // Schrijf hier je code
 }
 
 function showFruits(list) {
     console.log(list);
 
-    //start solution
-    return list.sort().join(',');
-    //end
+    // Schrijf hier je code
 
     return '';
 }

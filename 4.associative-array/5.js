@@ -1,18 +1,7 @@
 function addFruit(fruits, name, color, taste, calories, carbs, fiber) {
     console.log(fruits, name, color, taste, calories, carbs, fiber);
 
-    //start solution
-    fruits.push({
-        name: name, //Als zowel key als value hetzelfde zijn, kan je ook gewoon "name," schrijven.
-        color: color,
-        taste: taste,
-        nutrition: {
-            calories: calories,
-            carbs: carbs,
-            fiber: fiber
-        }
-    });
-    //end
+    // Schrijf hier je code
 
     return fruits;
 }

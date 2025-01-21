@@ -1,13 +1,7 @@
 function greeting(age) {
     console.log(age);
 
-    //start solution
-    if(age >= 18) {
-        return 'Welkom!'
-    }
-
-    return 'Verboden toegang voor minderjarigen.';
-    //end
+    // Schrijf hier je code
 
     return 'Hier komt jouw resultaat';
 }

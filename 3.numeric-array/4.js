@@ -3,13 +3,7 @@ function addFruit(list, element) {
 
     console.log(list, element);
 
-    //start solution
-    let valid = (validFruits.indexOf(element) > -1);
-
-    if(valid) {
-        list.push(element);
-    }
-    //end
+    // Schrijf hier je code
 
     return valid;
 }
@@ -17,9 +11,7 @@ function addFruit(list, element) {
 function showFruits(list) {
     console.log(list);
 
-    //start solution
-    return list.join(',');
-    //end
+    // Schrijf hier je code
 
     return '';
 }

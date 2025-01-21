@@ -1,13 +1,7 @@
 function searchWord(word1, word2) {
     console.log(word1, word2);
 
-    //start solution
-    if(word1.includes(word2)){
-        return word2 + ' gevonden in '+ word1  + '!';
-    }
-
-    return word2 + ' is niet gevonden in '+ word1  + '!';
-    //end
+    // Schrijf hier je code
 
     return '';
 }

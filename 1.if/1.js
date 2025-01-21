@@ -1,13 +1,7 @@
 function greeting(gender, name) {
     console.log(gender, name);
 
-    //start solution
-    if(gender === "man") {
-        return "Meneer " + name;
-    }
-
-    return "Mevrouw " + name;
-    //end
+    // Schrijf hier je code
 
     return 'Hier komt jouw resultaat';
 }

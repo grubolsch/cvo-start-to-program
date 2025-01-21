@@ -1,27 +1,19 @@
 function addFruit(list, element) {
     console.log(list, element);
 
-    //start solution
-    list.push(element)
-    //end
+    // Schrijf hier je code
 }
 
 function changeFruit(list, index, newFruit) {
     console.log(list, index, newFruit);
 
-    //start solution
-    if (index >= 0 && index < list.length) {
-        list.splice(index, 1, newFruit);
-    }
-    //end
+    // Schrijf hier je code
 }
 
 function showFruits(list) {
     console.log(list);
 
-    //start solution
-    return list.join(',');
-    //end
+    // Schrijf hier je code
 
     return '';
 }

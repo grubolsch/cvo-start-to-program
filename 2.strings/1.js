@@ -1,9 +1,7 @@
 function changeColor(red, green, blue) {
     console.log(red, green, blue);
 
-    //start solution
-    return 'rgb(' + red + ',' + green + ',' + blue + ')';
-    //end
+    // Schrijf hier je code
 
     return 'rgb(0, 0, 0)';
 }
